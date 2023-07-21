@@ -17,7 +17,7 @@ namespace IMReader.Application.Managers
 
         public static MyTheme GetThemeSetting()
         {
-            return ReadSettingAsEnum<MyTheme>(THEME_SETTING);
+            return ReadSetting<MyTheme>(THEME_SETTING);
         }
 
         public static void SaveThemeSetting(MyTheme theme) { 
@@ -26,7 +26,7 @@ namespace IMReader.Application.Managers
 
         public static DensityStyle GetDensitySetting()
         {
-            return ReadSettingAsEnum<DensityStyle>(DENSITY_SETTING);
+            return ReadSetting<DensityStyle>(DENSITY_SETTING);
         }
 
         public static void SaveDensitySetting(DensityStyle density)
@@ -34,7 +34,7 @@ namespace IMReader.Application.Managers
             SaveEnum(DENSITY_SETTING, density);
         }
 
-        private static T ReadSettingAsEnum<T>(string key) where T : struct
+        private static T ReadSetting<T>(string key) where T : struct
         {
             var setting = ConfigurationManager.AppSettings[key] ?? string.Empty;
 
