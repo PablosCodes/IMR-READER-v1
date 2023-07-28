@@ -27,6 +27,18 @@ namespace IMRReader.ViewModels
             {
                 this.RaiseAndSetIfChanged(ref _selectedTarget, value);
                 this.RaisePropertyChanged(nameof(SelectedTarget.Measurements));
+                this.RaisePropertyChanged(nameof(SelectedTarget.Name));
+            }
+        }
+
+        // TODO: Add measurement selection & measurement's display logic
+        private bool _shouldMeasurementBePresented = true;
+        public bool ShouldMeasurementBePresented
+        {
+            get => _shouldMeasurementBePresented;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _shouldMeasurementBePresented, value);
             }
         }
 
@@ -43,6 +55,7 @@ namespace IMRReader.ViewModels
 
         }
 
+        // TODO: Add current settings tick in menu
         private void SwitchTheme(string? themeText)
         {
             if (Enum.TryParse(themeText, true, out MyTheme theme))

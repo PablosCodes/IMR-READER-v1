@@ -4,6 +4,7 @@
 		xmlns:dto="clr-namespace:IMRReader.App.ViewModels;assembly="
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="IMRReader.Views.MainWindow"
         x:DataType="vm:MainWindowVM"
@@ -99,6 +100,46 @@
 					</DataGrid>
 				</Grid>
 			</SplitView>
+
+			<!--Measurement presentation-->
+			<Label Grid.Row="1"
+				   Grid.Column="2"
+				   Margin="5">
+				Metryka pomiaru
+			</Label>
+
+			<Grid Grid.Row="2" Grid.Column="2" IsVisible="{Binding ShouldMeasurementBePresented}">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="5"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="2*"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="5"/>
+				</Grid.ColumnDefinitions>
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="5"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="5"/>
+				</Grid.RowDefinitions>
+
+				<TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+					<Bold>Obiekt:</Bold>
+					<Run Text="{Binding SelectedTarget.Name}"/>
+				</TextBlock>
+				<Panel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Background="AliceBlue">
+					<TextBlock>METRICS TO BE ADDED</TextBlock>
+				</Panel>
+
+				<TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+					<Bold>Komentarz:</Bold>
+				</TextBlock>
+				<TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="TESTOWY KOMENTARZ"/>
+
+			</Grid>	
 		</Grid>
 	</DockPanel>
 </Window>

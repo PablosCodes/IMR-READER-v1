@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
+    <PackageReference Include="ScottPlot.Avalonia" Version="4.1.65" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
