@@ -1,19 +1,18 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:IMRReader.ViewModels"
-		xmlns:dto="clr-namespace:IMRReader.App.ViewModels;assembly="
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:ScottPlot="clr-namespace:ScottPlot.Avalonia;assembly=ScottPlot.Avalonia"
+		xmlns:dc="using:IMRReader.DataContextes"
+		xmlns:view="using:IMRReader.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="IMRReader.Views.MainWindow"
-        x:DataType="vm:MainWindowVM"
+        x:DataType="dc:MainWindowVM"
         Icon="/Assets/avalonia-logo.ico"
         Title="IMRReader"
 		>
 
 	<Design.DataContext>
-		<vm:MainWindowVM/>
+		<dc:MainWindowVM/>
 	</Design.DataContext>
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Top">
@@ -23,14 +22,20 @@
 					<Separator/>
 					<MenuItem Header="_Exit"/>
 				</MenuItem>
-				<MenuItem Header="_Widok">
-					<MenuItem Header="_Motyw">
-						<MenuItem Header="Jasny" Command="{Binding SwitchThemeCommand}" CommandParameter="0"/>
-						<MenuItem Header="Ciemny" Command="{Binding SwitchThemeCommand}" CommandParameter="1"/>
+				<MenuItem Header="_Widok" DataContext="{Binding ApperanceMenuVM}">
+					<MenuItem Header="_Motyw" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}">
+						<MenuItem.ItemTemplate>
+							<DataTemplate x:Class="dc:ThemeVM">
+								<RadioButton IsChecked="{Binding IsSelected}" IsHitTestVisible="False" VerticalAlignment="Center" Content="{Binding Name}"/>
+							</DataTemplate>
+						</MenuItem.ItemTemplate>
 					</MenuItem>
-					<MenuItem Header="_Styl">
-						<MenuItem Header="Normalny" Command="{Binding SwitchDensityCommand}" CommandParameter="0"/>
-						<MenuItem Header="Kompaktowy" Command="{Binding SwitchDensityCommand}" CommandParameter="1"/>
+					<MenuItem Header="_Styl" ItemsSource="{Binding Densities}" SelectedItem="{Binding SelectedDensity}">
+						<MenuItem.ItemTemplate>
+							<DataTemplate x:Class="dc:DensityVM">
+								<RadioButton IsChecked="{Binding IsSelected}" IsHitTestVisible="False" VerticalAlignment="Center" Content="{Binding Name}"/>
+							</DataTemplate>
+						</MenuItem.ItemTemplate>
 					</MenuItem>
 				</MenuItem>
 			</Menu>
@@ -41,7 +46,7 @@
 				</DockPanel>
 			</Border>
 		</DockPanel>
-		
+
 		<Grid DockPanel.Dock="Bottom">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="5"/>
@@ -139,7 +144,7 @@
 				</TextBlock>
 				<TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="TESTOWY KOMENTARZ"/>
 
-			</Grid>	
+			</Grid>
 		</Grid>
 	</DockPanel>
 </Window>

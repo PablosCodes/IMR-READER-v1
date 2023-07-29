@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMReader.Application.ViewModels
+namespace IMRReader.Application.ViewModels
 {
     public record Measurement
     {

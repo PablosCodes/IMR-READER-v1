@@ -1,9 +1,9 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using IMReader.Application.Managers;
 using IMRReader.Application.Managers;
-using IMRReader.ViewModels;
+using IMRReader.DataContextes;
+using IMRReader.Managers;
 using IMRReader.Views;
 
 namespace IMRReader
@@ -25,18 +25,7 @@ namespace IMRReader
                 };
             }
 
-            LoadAppearanceSettings();
-
             base.OnFrameworkInitializationCompleted();
-        }
-
-        private void LoadAppearanceSettings()
-        {
-            var style = SettingsManager.GetDensitySetting();
-            AppearanceManager.SetDensity(this, style);
-
-            var theme = SettingsManager.GetThemeSetting();
-            AppearanceManager.SetTheme(this, theme);
         }
     }
 }

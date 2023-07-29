@@ -22,10 +22,11 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
     <PackageReference Include="ScottPlot.Avalonia" Version="4.1.65" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\IMReader.App\IMReader.Application.csproj" />
+    <ProjectReference Include="..\IMRReader.App\IMRReader.Application.csproj" />
   </ItemGroup>
 </Project>

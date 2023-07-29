@@ -1,17 +1,20 @@
 ﻿using Avalonia.Themes.Fluent;
-using IMReader.Application.Managers;
-using IMReader.Application.ViewModels;
 using IMRReader.Application.Managers;
+using IMRReader.Managers;
 using IMRReader.Common;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
+using IMRReader.Application.ViewModels;
 
-namespace IMRReader.ViewModels
+namespace IMRReader.DataContextes
 {
     public class MainWindowVM : ViewModelBase
     {
+        public ApperanceMenuVM ApperanceMenuVM { get; set; }
+
         private List<Target>? _targets;
         public List<Target>? Targets
         {
@@ -42,38 +45,13 @@ namespace IMRReader.ViewModels
             }
         }
 
-        public ReactiveCommand<string, Unit> SwitchThemeCommand { get; }
-
-        public ReactiveCommand<string, Unit> SwitchDensityCommand { get; }
-
         public MainWindowVM()
         {
-            SwitchThemeCommand = ReactiveCommand.Create<string>(SwitchTheme);
-            SwitchDensityCommand = ReactiveCommand.Create<string>(SwitchDensity);
+            ApperanceMenuVM = new ApperanceMenuVM();
 
             SeedData();
-
         }
-
-        // TODO: Add current settings tick in menu
-        private void SwitchTheme(string? themeText)
-        {
-            if (Enum.TryParse(themeText, true, out MyTheme theme))
-            {
-                AppearanceManager.SetTheme(App.Current, theme);
-                SettingsManager.SaveThemeSetting(theme);
-            }
-        }
-
-        private void SwitchDensity(string? densityText)
-        {
-            if (Enum.TryParse(densityText, true, out DensityStyle density))
-            {
-                AppearanceManager.SetDensity(App.Current, density);
-                SettingsManager.SaveDensitySetting(density);
-            }
-        }
-
+        
         private void SeedData()
         {
             Targets = new() {

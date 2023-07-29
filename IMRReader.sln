@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMReader.Application", "IMReader.App\IMReader.Application.csproj", "{9A4FDBE9-545B-44FA-B57E-25316CCA22F6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMRReader", "IMRReader\IMRReader.csproj", "{0CCC57B1-7DB2-4683-824E-13C9E2DBE01C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMRReader.Application", "IMRReader.App\IMRReader.Application.csproj", "{B4BCC336-3869-4DB5-9658-9CBBECA016F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9A4FDBE9-545B-44FA-B57E-25316CCA22F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A4FDBE9-545B-44FA-B57E-25316CCA22F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A4FDBE9-545B-44FA-B57E-25316CCA22F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A4FDBE9-545B-44FA-B57E-25316CCA22F6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CCC57B1-7DB2-4683-824E-13C9E2DBE01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CCC57B1-7DB2-4683-824E-13C9E2DBE01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CCC57B1-7DB2-4683-824E-13C9E2DBE01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CCC57B1-7DB2-4683-824E-13C9E2DBE01C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

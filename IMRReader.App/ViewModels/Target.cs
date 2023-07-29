@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMReader.Application.ViewModels
+namespace IMRReader.Application.ViewModels
 {
     public class Target
     {
@@ -19,7 +19,5 @@ namespace IMReader.Application.ViewModels
             Id = id;
             Name = name;           
         }
-
-        public Target() { }
     }
 }

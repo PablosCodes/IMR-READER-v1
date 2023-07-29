@@ -1,6 +1,6 @@
 ﻿using Avalonia.Data.Core;
 using Avalonia.Themes.Fluent;
-using IMRReader.Application.Managers;
+using IMRReader.Managers;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMReader.Application.Managers
+namespace IMRReader.Application.Managers
 {
     public static class SettingsManager
     {
@@ -60,7 +60,6 @@ namespace IMReader.Application.Managers
                 settings[key].Value = value.ToString();
             }
             configFile.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
         }
     }
 }
