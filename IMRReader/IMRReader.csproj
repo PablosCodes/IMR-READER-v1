@@ -14,13 +14,15 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="11.0.0" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0" />
+    <PackageReference Include="Avalonia" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.1" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.1" />
     <PackageReference Include="ScottPlot.Avalonia" Version="4.1.65" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
@@ -28,5 +30,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IMRReader.App\IMRReader.Application.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Update="Controls\MyPlot.axaml.cs">
+      <DependentUpon>MyPlot.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Header.axaml.cs">
+      <DependentUpon>Header.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

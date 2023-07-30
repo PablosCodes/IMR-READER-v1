@@ -2,11 +2,11 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace IMRReader.Views;
+namespace IMRReader.Controls;
 
-public partial class MeasurementChartView : UserControl
+public partial class Header : TextBlock
 {
-    public MeasurementChartView()
+    public Header()
     {
         InitializeComponent();
     }

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Themes.Fluent;
+using IMRReader.Application.Common;
 using IMRReader.Application.Managers;
 using IMRReader.Common;
 using IMRReader.Managers;
@@ -25,8 +26,11 @@ namespace IMRReader.DataContextes
             set
             {
                 this.RaiseAndSetIfChanged(ref _selectedTheme, value);
+                this.RaisePropertyChanged(nameof(IsThemeDark));
             }
         }
+
+        public bool IsThemeDark => SelectedTheme is not null && SelectedTheme.Value == MyTheme.Dark;
 
         public List<DensityVM> Densities { get; private set; }
 

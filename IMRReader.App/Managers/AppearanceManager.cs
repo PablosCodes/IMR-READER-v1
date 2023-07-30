@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
+using IMRReader.Application.Common;
 
 namespace IMRReader.Managers;
 
@@ -43,4 +44,3 @@ public class AppearanceManager
         }
     }
 }
-public enum MyTheme { Light, Dark };

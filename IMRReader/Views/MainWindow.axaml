@@ -2,18 +2,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+		xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions"
 		xmlns:dc="using:IMRReader.DataContextes"
 		xmlns:view="using:IMRReader.Views"
+		xmlns:controls="using:IMRReader.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="IMRReader.Views.MainWindow"
         x:DataType="dc:MainWindowVM"
         Icon="/Assets/avalonia-logo.ico"
-        Title="IMRReader"
-		>
-
+        Title="IMRReader">
 	<Design.DataContext>
 		<dc:MainWindowVM/>
 	</Design.DataContext>
+
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Top">
 			<Menu DockPanel.Dock="Top">
@@ -47,31 +49,28 @@
 			</Border>
 		</DockPanel>
 
-		<Grid DockPanel.Dock="Bottom">
+		<Grid DockPanel.Dock="Bottom"
+			  Margin="5">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="5"/>
 				<RowDefinition Height="auto"/>
 				<RowDefinition Height="*"/>
-				<RowDefinition Height="5"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="5"/>
 				<!--<ColumnDefinition Width="*" MinWidth="100"/>
 			<ColumnDefinition Width="3*"/>-->
 				<ColumnDefinition Width="4*"/>
 				<ColumnDefinition Width="2*"
 								  MinWidth="200"/>
-				<ColumnDefinition Width="5"/>
 			</Grid.ColumnDefinitions>
 
-			<Label Grid.Row="1"
-				   Grid.Column="1"
+			<controls:Header Grid.Row="0"
+				   Grid.Column="0"
 				   Margin="5">
 				Obiekty
-			</Label>
+			</controls:Header>
 
-			<SplitView Grid.Row="2"
-					   Grid.Column="1"
+			<SplitView Grid.Row="1"
+					   Grid.Column="0"
 					   IsPaneOpen="True"
 					   DisplayMode="Inline"
 					   OpenPaneLength="296">
@@ -90,30 +89,38 @@
 					</ListBox>
 				</SplitView.Pane>
 
-				<Grid>
-					<DataGrid ItemsSource="{Binding SelectedTarget.Measurements}"
+				<DataGrid ItemsSource="{Binding SelectedTarget.Measurements}"
 							  AutoGenerateColumns="False"
 							  CanUserReorderColumns="True"
 							  CanUserResizeColumns="True"
 							  CanUserSortColumns="True">
-						<DataGrid.Columns>
-							<DataGridTextColumn Header="DATA" Binding="{Binding Date}" IsReadOnly="True"/>
-							<DataGridTextColumn Header="METODA" Binding="{Binding Method}" IsReadOnly="True"/>
-							<DataGridTextColumn Header="WYNIK" Binding="{Binding Results}" IsReadOnly="True"/>
-							<DataGridTextColumn Header="KOMENTARZ" Binding="{Binding Comment}" IsReadOnly="True"/>
-						</DataGrid.Columns>
-					</DataGrid>
-				</Grid>
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="DATA"
+											Binding="{Binding Date}"
+											IsReadOnly="True"/>
+						<DataGridTextColumn Header="METODA"
+											Binding="{Binding Method}"
+											IsReadOnly="True"/>
+						<DataGridTextColumn Header="WYNIK"
+											Binding="{Binding Results}"
+											IsReadOnly="True"/>
+						<DataGridTextColumn Header="KOMENTARZ"
+											Binding="{Binding Comment}"
+											IsReadOnly="True"/>
+					</DataGrid.Columns>
+				</DataGrid>
 			</SplitView>
 
 			<!--Measurement presentation-->
-			<Label Grid.Row="1"
-				   Grid.Column="2"
+			<controls:Header Grid.Row="0"
+				   Grid.Column="1"
 				   Margin="5">
 				Metryka pomiaru
-			</Label>
+			</controls:Header>
 
-			<Grid Grid.Row="2" Grid.Column="2" IsVisible="{Binding ShouldMeasurementBePresented}">
+			<Grid Grid.Row="1"
+				  Grid.Column="1"
+				  IsVisible="{Binding ShouldMeasurementBePresented}">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="5"/>
 					<ColumnDefinition Width="*"/>
@@ -127,23 +134,51 @@
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"
+								   MaxHeight="60"/>
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="5"/>
 				</Grid.RowDefinitions>
-
-				<TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+				<TextBlock Grid.Row="1"
+						   Grid.Column="1"
+						   Grid.ColumnSpan="2">
 					<Bold>Obiekt:</Bold>
 					<Run Text="{Binding SelectedTarget.Name}"/>
 				</TextBlock>
-				<Panel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Background="AliceBlue">
+				<Panel Grid.Row="2"
+					   Grid.Column="1"
+					   Grid.ColumnSpan="3">
 					<TextBlock>METRICS TO BE ADDED</TextBlock>
 				</Panel>
 
-				<TextBlock Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2">
+				<TextBlock Grid.Row="3"
+						   Grid.Column="1"
+						   Grid.ColumnSpan="2">
 					<Bold>Komentarz:</Bold>
 				</TextBlock>
-				<TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" IsReadOnly="True" Text="TESTOWY KOMENTARZ"/>
+				<TextBox Grid.Row="4"
+						 Grid.Column="1"
+						 Grid.ColumnSpan="3"
+						 IsReadOnly="True"
+						 Text="TESTOWY KOMENTARZ"/>
 
+				<controls:MeasurementChartView Grid.Row="5"
+											   x:Name="plot"
+											   Grid.Column="1"
+											   Grid.ColumnSpan="3"
+											   Margin="5"
+											   XData="{Binding XAxisData}"
+											   YData="{Binding YAxisData}"
+											   PlotStyle="Monospace">
+					<i:Interaction.Behaviors>
+						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="True">
+							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Black" />
+						</DataTriggerBehavior>
+						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="False">
+							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Light1" />
+						</DataTriggerBehavior>
+					</i:Interaction.Behaviors>
+				</controls:MeasurementChartView>
 			</Grid>
 		</Grid>
 	</DockPanel>

@@ -1,5 +1,6 @@
 ﻿using Avalonia.Data.Core;
 using Avalonia.Themes.Fluent;
+using IMRReader.Application.Common;
 using IMRReader.Managers;
 using System;
 using System.Collections.Generic;
