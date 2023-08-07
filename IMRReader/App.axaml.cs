@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using HanumanInstitute.MvvmDialogs.Avalonia;
 using IMRReader.Application.Managers;
 using IMRReader.DataContextes;
 using IMRReader.Managers;
@@ -21,7 +22,7 @@ namespace IMRReader
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowVM(),
+                    DataContext = new MainWindowVM(new DialogService()),
                 };
             }
 

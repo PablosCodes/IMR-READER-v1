@@ -66,7 +66,7 @@ namespace IMRReader.DataContextes
             LoadSettings();
         }
 
-        private IEnumerable<ThemeVM> GetAvailableThemeVMs()
+        private static IEnumerable<ThemeVM> GetAvailableThemeVMs()
         {
             return new List<ThemeVM>() {
                 new ThemeVM(MyTheme.Light,"Jasny"),
@@ -74,7 +74,7 @@ namespace IMRReader.DataContextes
             };
         }
 
-        private IEnumerable<DensityVM> GetAvailableDensitiesVMs()
+        private static IEnumerable<DensityVM> GetAvailableDensitiesVMs()
         {
             return new List<DensityVM>() {
                 new DensityVM(DensityStyle.Normal,"Normalny"),
