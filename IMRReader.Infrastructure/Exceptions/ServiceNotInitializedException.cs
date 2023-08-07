@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IMRReader.Infrastructure.Exceptions
+﻿namespace IMRReader.Infrastructure.Exceptions
 {
     public class ServiceNotInitializedException : Exception
     {

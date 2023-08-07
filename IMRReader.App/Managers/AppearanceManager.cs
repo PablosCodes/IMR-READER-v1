@@ -1,5 +1,4 @@
-﻿using Avalonia;
-using Avalonia.Styling;
+﻿using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
 using IMRReader.Application.Common;
 
@@ -18,14 +17,15 @@ public class AppearanceManager
     {
         if (app is not null)
         {
-           app.RequestedThemeVariant = GetThemeVariant(requestedTheme);
+            app.RequestedThemeVariant = GetThemeVariant(requestedTheme);
             _currentTheme = requestedTheme;
         }
 
         return _currentTheme;
     }
 
-    private ThemeVariant GetThemeVariant(MyTheme theme) => theme switch { 
+    private ThemeVariant GetThemeVariant(MyTheme theme) => theme switch
+    {
         MyTheme.Dark => ThemeVariant.Dark,
         MyTheme.Light => ThemeVariant.Light,
         _ => ThemeVariant.Light

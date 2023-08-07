@@ -4,12 +4,9 @@ using IMRReader.Application.Managers;
 using IMRReader.Common;
 using IMRReader.Managers;
 using ReactiveUI;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IMRReader.DataContextes
 {

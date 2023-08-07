@@ -1,18 +1,14 @@
-﻿using Avalonia.Themes.Fluent;
-using IMRReader.Application.Managers;
-using IMRReader.Managers;
+﻿using HanumanInstitute.MvvmDialogs;
+using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
+using IMRReader.Application.ViewModels;
 using IMRReader.Common;
+using IMRReader.Infrastructure.FileReaders;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reactive;
-using IMRReader.Application.ViewModels;
-using IMRReader.Infrastructure.FileReaders;
 using System.Collections.ObjectModel;
-using HanumanInstitute.MvvmDialogs;
 using System.Diagnostics;
-using HanumanInstitute.MvvmDialogs.FrameworkDialogs;
+using System.Reactive;
 
 namespace IMRReader.DataContextes
 {
@@ -69,9 +65,9 @@ namespace IMRReader.DataContextes
 
 #if DEBUG
             SeedData();
-        #endif
+#endif
         }
-        
+
         private async void OpenFileDialog()
         {
             OpenFileDialogSettings openFileDialogSettings = new()
@@ -83,7 +79,8 @@ namespace IMRReader.DataContextes
                 },
                 Title = "Select database file"
             };
-                
+            var dialog = await _dialogService.ShowOpenFileDialogAsync(this, openFileDialogSettings);
+            Debug.WriteLine(dialog?.LocalPath);
         }
 
         private void ExitApp()
@@ -100,6 +97,6 @@ namespace IMRReader.DataContextes
             var targets = sQLiteTargetInfoLoader.GetMeasurementsForTarget(0);
         }
 
-        
+
     }
 }

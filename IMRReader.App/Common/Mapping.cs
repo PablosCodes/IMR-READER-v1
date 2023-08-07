@@ -1,10 +1,5 @@
 ﻿using IMRReader.Application.ViewModels;
 using IMRReader.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IMRReader.Application.Common
 {
@@ -16,15 +11,16 @@ namespace IMRReader.Application.Common
             {
                 Id = measurement.Id,
                 Comment = measurement.Comment,
-                Date= measurement.Date,
+                Date = measurement.Date,
                 Method = measurement.Method,
-                Results = measurement.Results               
+                Results = measurement.Results
             };
 
             return measurementVM;
         }
 
-        public static TargetVM GetVM(this Target target) { 
+        public static TargetVM GetVM(this Target target)
+        {
             TargetVM targetVM = new()
             {
                 Id = target.Id,

@@ -1,13 +1,6 @@
-﻿using Avalonia.Data.Core;
-using Avalonia.Themes.Fluent;
+﻿using Avalonia.Themes.Fluent;
 using IMRReader.Application.Common;
-using IMRReader.Managers;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IMRReader.Application.Managers
 {
@@ -21,7 +14,8 @@ namespace IMRReader.Application.Managers
             return ReadSetting<MyTheme>(THEME_SETTING);
         }
 
-        public static void SaveThemeSetting(MyTheme theme) { 
+        public static void SaveThemeSetting(MyTheme theme)
+        {
             SaveEnum(THEME_SETTING, theme);
         }
 

@@ -1,12 +1,5 @@
-﻿using IMRReader.Managers;
+﻿using Avalonia.Themes.Fluent;
 using IMRReader.Common;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Avalonia.Themes.Fluent;
 
 namespace IMRReader.DataContextes
 {

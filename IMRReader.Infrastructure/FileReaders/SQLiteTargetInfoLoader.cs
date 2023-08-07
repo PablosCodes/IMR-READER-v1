@@ -1,14 +1,8 @@
 ﻿using IMRReader.Domain.Abstract;
 using IMRReader.Domain.Models;
 using Microsoft.Data.Sqlite;
-using Microsoft.VisualBasic;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Formats.Tar;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace IMRReader.Infrastructure.FileReaders
 {
@@ -35,7 +29,7 @@ namespace IMRReader.Infrastructure.FileReaders
 
         private void CheckIfInitialized()
         {
-            if(!isInitialized)
+            if (!isInitialized)
                 throw new Exceptions.ServiceNotInitializedException();
         }
 
@@ -53,7 +47,7 @@ namespace IMRReader.Infrastructure.FileReaders
         private static async IAsyncEnumerable<Measurement> LoadMeasurements(SqliteCommand sqliteCommand)
         {
             using var sqlReader = sqliteCommand.ExecuteReader();
-            while(await sqlReader.ReadAsync())
+            while (await sqlReader.ReadAsync())
             {
                 Measurement? latestMeasurement = default;
                 try
@@ -67,14 +61,15 @@ namespace IMRReader.Infrastructure.FileReaders
                         Results = string.Empty,
                         Comment = sqlReader.GetString(3)
                     };
-                    
-                    
-                }catch (Exception ex)
+
+
+                }
+                catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
                 }
 
-                if(latestMeasurement is not null)
+                if (latestMeasurement is not null)
                     yield return latestMeasurement;
             }
         }
@@ -109,7 +104,7 @@ namespace IMRReader.Infrastructure.FileReaders
                     Debug.WriteLine(ex);
                 }
 
-                if(target is not null)
+                if (target is not null)
                     yield return target;
             }
         }

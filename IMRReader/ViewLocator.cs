@@ -9,7 +9,7 @@ namespace IMRReader
     {
         public Control Build(object? data)
         {
-            if(data is null)
+            if (data is null)
                 return new TextBlock { Text = "Object cannot be null" };
 
             var name = data.GetType().FullName!.Replace("ViewModel", "View");

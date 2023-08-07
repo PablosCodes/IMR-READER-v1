@@ -1,10 +1,7 @@
-using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using HanumanInstitute.MvvmDialogs.Avalonia;
-using IMRReader.Application.Managers;
 using IMRReader.DataContextes;
-using IMRReader.Managers;
 using IMRReader.Views;
 
 namespace IMRReader
