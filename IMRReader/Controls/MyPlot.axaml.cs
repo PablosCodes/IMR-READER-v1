@@ -65,6 +65,7 @@ public partial class MeasurementChartView : UserControl
         }
     }
 
+    // TODO: fix blinking plot when changinh themes
     private void UpdatePlotStyle(PlotStyle styleToApply)
     {
         AvaPlot? plot = GetPlotControl();
@@ -72,10 +73,8 @@ public partial class MeasurementChartView : UserControl
             return;
 
         plot.Plot.Style(styleToApply.GetIStyle());
-        plot.Refresh();
+        plot.RefreshRequest();
     }
-
-    // TODO: fix blinking plot when changinh themes
     private void RefreshPlot()
     {
         if (!CanRefreshPlot()) return;

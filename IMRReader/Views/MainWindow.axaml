@@ -168,8 +168,7 @@
 											   Grid.ColumnSpan="3"
 											   Margin="5"
 											   XData="{Binding XAxisData}"
-											   YData="{Binding YAxisData}"
-											   PlotStyle="Monospace">
+											   YData="{Binding YAxisData}">
 					<i:Interaction.Behaviors>
 						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="True">
 							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Black" />
