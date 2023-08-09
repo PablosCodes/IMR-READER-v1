@@ -7,16 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AvaloniaXaml Remove="Services\**" />
-    <Compile Remove="Services\**" />
-    <EmbeddedResource Remove="Services\**" />
-    <None Remove="Services\**" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
+    <PackageReference Include="ReactiveUI" Version="19.4.1" />
+    <PackageReference Include="ScottPlot" Version="4.1.66" />
+    <PackageReference Include="ScottPlot.Avalonia" Version="4.1.66" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
-    <PackageReference Include="ScottPlot.Avalonia" Version="4.1.65" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
+    <ProjectReference Include="..\IMRReader.Domain\IMRReader.Domain.csproj" />
+    <ProjectReference Include="..\IMRReader.Infrastructure\IMRReader.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstract\" />
   </ItemGroup>
 
 </Project>

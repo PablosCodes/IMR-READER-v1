@@ -1,13 +1,6 @@
-﻿using IMRReader.Managers;
-using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReactiveUI;
 
-namespace IMRReader.Common
+namespace IMRReader.Application.Common
 {
     public abstract class SelectiveAppearanceOption<T> : ReactiveObject where T : Enum
     {

@@ -1,9 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using IMRReader.Application.Common;
-using ScottPlot;
 using ScottPlot.Avalonia;
-using ScottPlot.Styles;
 using System;
 
 namespace IMRReader.Controls;
@@ -54,12 +52,12 @@ public partial class MeasurementChartView : UserControl
     {
         base.OnPropertyChanged(change);
 
-        if(change.Property == PlotStyleProperty)
+        if (change.Property == PlotStyleProperty)
         {
             UpdatePlotStyle(PlotStyle);
         }
 
-        if(change.Property == XDataProperty || change.Property == YDataProperty)
+        if (change.Property == XDataProperty || change.Property == YDataProperty)
         {
             RefreshPlot();
         }

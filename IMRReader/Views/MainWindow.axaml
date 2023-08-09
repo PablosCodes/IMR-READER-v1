@@ -20,9 +20,9 @@
 		<DockPanel DockPanel.Dock="Top">
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_Plik">
-					<MenuItem Header="_Open..."/>
+					<MenuItem Header="_Open..." Command ="{Binding OpenFileDialogCommand}"/>
 					<Separator/>
-					<MenuItem Header="_Exit"/>
+					<MenuItem Header="_Exit" Command ="{Binding ExitAppCommand}"/>
 				</MenuItem>
 				<MenuItem Header="_Widok" DataContext="{Binding ApperanceMenuVM}">
 					<MenuItem Header="_Motyw" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}">
@@ -167,8 +167,7 @@
 											   Grid.Column="1"
 											   Grid.ColumnSpan="3"
 											   Margin="5"
-											   XData="{Binding XAxisData}"
-											   YData="{Binding YAxisData}">
+											   PlotStyle="Monospace">
 					<i:Interaction.Behaviors>
 						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="True">
 							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Black" />

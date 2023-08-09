@@ -15,16 +15,18 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.0.2" />
     <PackageReference Include="Avalonia.Desktop" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.2" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.1" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.2" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.2" />
-    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.1" />
-    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.1" />
-    <PackageReference Include="ScottPlot.Avalonia" Version="4.1.65" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.2" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="11.0.2" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.2" />
+    <PackageReference Include="DialogHost.Avalonia" Version="0.7.6" />
+    <PackageReference Include="HanumanInstitute.MvvmDialogs.Avalonia" Version="2.0.0" />
+    <PackageReference Include="ScottPlot" Version="4.1.66" />
+    <PackageReference Include="ScottPlot.Avalonia" Version="4.1.66" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="7.0.0" />
   </ItemGroup>
 

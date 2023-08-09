@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMRReader", "IMRReader\IMRR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IMRReader.Application", "IMRReader.App\IMRReader.Application.csproj", "{B4BCC336-3869-4DB5-9658-9CBBECA016F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMRReader.Domain", "IMRReader.Domain\IMRReader.Domain.csproj", "{68C63E94-C971-4112-8EDE-9438619AFBDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IMRReader.Infrastructure", "IMRReader.Infrastructure\IMRReader.Infrastructure.csproj", "{46317B91-2E4E-4C1A-B125-010BBA5FE129}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4BCC336-3869-4DB5-9658-9CBBECA016F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68C63E94-C971-4112-8EDE-9438619AFBDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68C63E94-C971-4112-8EDE-9438619AFBDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68C63E94-C971-4112-8EDE-9438619AFBDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68C63E94-C971-4112-8EDE-9438619AFBDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46317B91-2E4E-4C1A-B125-010BBA5FE129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46317B91-2E4E-4C1A-B125-010BBA5FE129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46317B91-2E4E-4C1A-B125-010BBA5FE129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46317B91-2E4E-4C1A-B125-010BBA5FE129}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
