@@ -2,7 +2,7 @@
 using Avalonia.Themes.Fluent;
 using IMRReader.Application.Common;
 
-namespace IMRReader.Managers;
+namespace IMRReader.Application.Managers;
 
 public class AppearanceManager
 {

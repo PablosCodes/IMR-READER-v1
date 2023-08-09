@@ -1,7 +1,6 @@
 ﻿using IMRReader.Application.Common;
-using IMRReader.Common;
 
-namespace IMRReader.DataContextes
+namespace IMRReader.Application.ViewModels
 {
     public class ThemeVM : SelectiveAppearanceOption<MyTheme>
     {

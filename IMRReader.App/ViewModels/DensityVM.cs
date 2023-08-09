@@ -1,7 +1,7 @@
 ﻿using Avalonia.Themes.Fluent;
-using IMRReader.Common;
+using IMRReader.Application.Common;
 
-namespace IMRReader.DataContextes
+namespace IMRReader.Application.ViewModels
 {
     public class DensityVM : SelectiveAppearanceOption<DensityStyle>
     {

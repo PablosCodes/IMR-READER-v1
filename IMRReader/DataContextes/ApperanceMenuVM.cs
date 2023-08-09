@@ -1,8 +1,8 @@
 ﻿using Avalonia.Themes.Fluent;
 using IMRReader.Application.Common;
 using IMRReader.Application.Managers;
+using IMRReader.Application.ViewModels;
 using IMRReader.Common;
-using IMRReader.Managers;
 using ReactiveUI;
 using System.Collections.Generic;
 using System.Linq;

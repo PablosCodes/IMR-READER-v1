@@ -1,6 +1,6 @@
 ﻿using ReactiveUI;
 
-namespace IMRReader.Common
+namespace IMRReader.Application.Common
 {
     public abstract class SelectiveAppearanceOption<T> : ReactiveObject where T : Enum
     {
