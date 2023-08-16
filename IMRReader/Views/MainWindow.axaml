@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 		xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions"
+		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
 		xmlns:dc="using:IMRReader.DataContextes"
 		xmlns:view="using:IMRReader.Views"
 		xmlns:controls="using:IMRReader.Controls"
@@ -11,7 +12,8 @@
         x:Class="IMRReader.Views.MainWindow"
         x:DataType="dc:MainWindowVM"
         Icon="/Assets/avalonia-logo.ico"
-        Title="IMRReader">
+        Title="IMRReader"
+		x:Name="mainWindow">
 	<Design.DataContext>
 		<dc:MainWindowVM/>
 	</Design.DataContext>
@@ -32,10 +34,10 @@
 							</DataTemplate>
 						</MenuItem.ItemTemplate>
 					</MenuItem>
-					<MenuItem Header="_Styl" ItemsSource="{Binding Densities}" SelectedItem="{Binding SelectedDensity}">
+					<MenuItem Header="_Styl" ItemsSource="{Binding Densities}" x:Name="densityMenu">
 						<MenuItem.ItemTemplate>
 							<DataTemplate x:Class="dc:DensityVM">
-								<RadioButton IsChecked="{Binding IsSelected}" IsHitTestVisible="False" VerticalAlignment="Center" Content="{Binding Name}"/>
+								<RadioButton IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Content="{Binding Name}" Command="{Binding Path=((dc:ApperanceMenuVM)DataContext).SelectedDensityCommand, ElementName=densityMenu }" CommandParameter="{Binding}"/>
 							</DataTemplate>
 						</MenuItem.ItemTemplate>
 					</MenuItem>
@@ -78,6 +80,7 @@
 				<SplitView.Pane>
 					<ListBox ItemsSource="{Binding Targets}"
 							 SelectedItem="{Binding SelectedTarget, Mode=TwoWay}"
+							 SelectionMode="Single"
 							 Margin="5">
 						<ListBox.ItemTemplate>
 							<DataTemplate x:Class="dto:Target">
@@ -93,7 +96,9 @@
 							  AutoGenerateColumns="False"
 							  CanUserReorderColumns="True"
 							  CanUserResizeColumns="True"
-							  CanUserSortColumns="True">
+								GridLinesVisibility="All"
+							  CanUserSortColumns="True"
+								SelectedItem="{Binding SelectedMeasurement, Mode=TwoWay}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="DATA"
 											Binding="{Binding Date}"
@@ -139,12 +144,14 @@
 					<RowDefinition Height="*"/>
 					<RowDefinition Height="5"/>
 				</Grid.RowDefinitions>
+				
 				<TextBlock Grid.Row="1"
 						   Grid.Column="1"
 						   Grid.ColumnSpan="2">
 					<Bold>Obiekt:</Bold>
 					<Run Text="{Binding SelectedTarget.Name}"/>
 				</TextBlock>
+				
 				<Panel Grid.Row="2"
 					   Grid.Column="1"
 					   Grid.ColumnSpan="3">
@@ -156,26 +163,21 @@
 						   Grid.ColumnSpan="2">
 					<Bold>Komentarz:</Bold>
 				</TextBlock>
+				
 				<TextBox Grid.Row="4"
 						 Grid.Column="1"
 						 Grid.ColumnSpan="3"
 						 IsReadOnly="True"
-						 Text="TESTOWY KOMENTARZ"/>
+						 Text="{Binding SelectedMeasurement.Comment}"/>
 
 				<controls:MeasurementChartView Grid.Row="5"
 											   x:Name="plot"
 											   Grid.Column="1"
 											   Grid.ColumnSpan="3"
 											   Margin="5"
-											   PlotStyle="Monospace">
-					<i:Interaction.Behaviors>
-						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="True">
-							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Black" />
-						</DataTriggerBehavior>
-						<DataTriggerBehavior Binding="{Binding ApperanceMenuVM.IsThemeDark}" ComparisonCondition="Equal" Value="False">
-							<ChangePropertyAction TargetObject="{Binding #plot}" PropertyName="PlotStyle" Value="Light1" />
-						</DataTriggerBehavior>
-					</i:Interaction.Behaviors>
+											   XData="{Binding SelectedMeasurement.MeasurementDataVM.XData}"
+											   YData="{Binding SelectedMeasurement.MeasurementDataVM.YData}"
+											   PlotStyle="{DynamicResource PlotStyle}">
 				</controls:MeasurementChartView>
 			</Grid>
 		</Grid>

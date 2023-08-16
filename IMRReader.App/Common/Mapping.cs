@@ -29,5 +29,14 @@ namespace IMRReader.Application.Common
 
             return targetVM;
         }
+
+        public static MeasurementDataVM GetVM(this MeasurementData measurementData) {
+            MeasurementDataVM measurementDataVM = new() { 
+                XData = measurementData.XData,
+                YData = measurementData.YData
+            };
+
+            return measurementDataVM;
+        }
     }
 }

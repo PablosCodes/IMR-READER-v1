@@ -4,7 +4,7 @@ namespace IMRReader.Domain.Abstract
 {
     public interface ITargetInfoLoader
     {
-        void Initialize(string filePath);
+        void OpenFile(string filePath);
 
         IAsyncEnumerable<Target> GetTargets();
 

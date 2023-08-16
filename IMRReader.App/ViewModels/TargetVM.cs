@@ -6,8 +6,13 @@ namespace IMRReader.Application.ViewModels
     {
         public required int Id { get; set; }
 
-        public ObservableCollection<MeasurementVM>? Measurements { get; set; }
+        public ObservableCollection<MeasurementVM> Measurements { get; set; }
 
         public required string Name { get; set; }
+
+        public TargetVM()
+        {
+            Measurements = new ObservableCollection<MeasurementVM>();
+        }
     }
 }

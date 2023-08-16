@@ -41,6 +41,8 @@ namespace IMRReader.DataContextes
             }
         }
 
+        public ReactiveCommand<DensityVM, Unit> SelectedDensityCommand { get; private set; }
+
         public ReactiveCommand<ThemeVM, Unit> SwitchThemeCommand { get; private set; }
 
         public ReactiveCommand<DensityVM, Unit> SwitchDensityCommand { get; private set; }
@@ -51,6 +53,7 @@ namespace IMRReader.DataContextes
 
             SwitchThemeCommand = ReactiveCommand.Create<ThemeVM>(SwitchTheme);
             SwitchDensityCommand = ReactiveCommand.Create<DensityVM>(SwitchDensity);
+            SelectedDensityCommand = ReactiveCommand.Create<DensityVM>(SelectDensity);
 
             Themes = GetAvailableThemeVMs()
             .ToList();
@@ -96,6 +99,10 @@ namespace IMRReader.DataContextes
             }
         }
 
+        private void SelectDensity(DensityVM selectedDensity)
+        {
+            SelectedDensity = selectedDensity;
+        }
         private void SwitchTheme(MyTheme selectedTheme)
         {
             _appearanceManager.SetTheme(App.Current, selectedTheme);
