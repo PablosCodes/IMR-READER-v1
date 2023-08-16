@@ -6,11 +6,9 @@ using IMRReader.Application.ViewModels;
 using IMRReader.Common;
 using IMRReader.Domain.Abstract;
 using ReactiveUI;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
