@@ -1,4 +1,5 @@
 ﻿using IMRReader.Application.ViewModels;
+using IMRReader.Domain.Models;
 
 namespace IMRReader.Application.Abstract
 {
