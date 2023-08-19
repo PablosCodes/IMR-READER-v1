@@ -81,7 +81,15 @@ public partial class MeasurementChartView : UserControl
         if (plot is null)
             return;
 
-        plot.Plot.AddScatter(XData, YData);
+        plot.Plot.Clear();
+
+        if (XData is not null && YData is not null)
+        {
+            plot.Plot.AddSignal(XData, 1, label: "Napiêcie");
+            plot.Plot.AddSignal(YData, 1, label: "Natê¿enie");
+            plot.Plot.Legend();
+        }
+
         plot.Refresh();
     }
 

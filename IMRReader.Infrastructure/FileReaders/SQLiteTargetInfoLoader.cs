@@ -13,9 +13,11 @@ namespace IMRReader.Infrastructure.FileReaders
 
         private bool isInitialized = false;
         private SqliteConnection? _sqlLiteConnection;
+        public string? FilePath { get; private set; }
 
         public void OpenFile(string filePath)
         {
+            FilePath = filePath;
             StringBuilder connectionStringBuilder = new StringBuilder()
                 .Append("Data Source=")
                 .Append(filePath);

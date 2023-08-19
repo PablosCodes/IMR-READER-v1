@@ -1,13 +1,14 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
-		xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions"
-		xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
-		xmlns:dc="using:IMRReader.DataContextes"
-		xmlns:view="using:IMRReader.Views"
-		xmlns:controls="using:IMRReader.Controls"
+<Window
+	xmlns="https://github.com/avaloniaui"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+	xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions"
+	xmlns:lvc="using:LiveChartsCore.SkiaSharpView.Avalonia"
+	xmlns:dc="using:IMRReader.DataContextes"
+	xmlns:view="using:IMRReader.Views"
+	xmlns:controls="using:IMRReader.Controls"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="IMRReader.Views.MainWindow"
         x:DataType="dc:MainWindowVM"
@@ -15,29 +16,28 @@
         Title="IMRReader"
 		x:Name="mainWindow">
 	<Design.DataContext>
-		<dc:MainWindowVM/>
+		<dc:MainWindowVM />
 	</Design.DataContext>
-
 	<DockPanel>
 		<DockPanel DockPanel.Dock="Top">
 			<Menu DockPanel.Dock="Top">
 				<MenuItem Header="_Plik">
-					<MenuItem Header="_Open..." Command ="{Binding OpenFileDialogCommand}"/>
-					<Separator/>
-					<MenuItem Header="_Exit" Command ="{Binding ExitAppCommand}"/>
+					<MenuItem Header="_Open..." Command ="{Binding OpenFileDialogCommand}" />
+					<Separator />
+					<MenuItem Header="_Exit" Command ="{Binding ExitAppCommand}" />
 				</MenuItem>
 				<MenuItem Header="_Widok" DataContext="{Binding ApperanceMenuVM}">
 					<MenuItem Header="_Motyw" ItemsSource="{Binding Themes}" SelectedItem="{Binding SelectedTheme}">
 						<MenuItem.ItemTemplate>
 							<DataTemplate x:Class="dc:ThemeVM">
-								<RadioButton IsChecked="{Binding IsSelected}" IsHitTestVisible="False" VerticalAlignment="Center" Content="{Binding Name}"/>
+								<RadioButton IsChecked="{Binding IsSelected}" IsHitTestVisible="False" VerticalAlignment="Center" Content="{Binding Name}" />
 							</DataTemplate>
 						</MenuItem.ItemTemplate>
 					</MenuItem>
 					<MenuItem Header="_Styl" ItemsSource="{Binding Densities}" x:Name="densityMenu">
 						<MenuItem.ItemTemplate>
 							<DataTemplate x:Class="dc:DensityVM">
-								<RadioButton IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Content="{Binding Name}" Command="{Binding Path=((dc:ApperanceMenuVM)DataContext).SelectedDensityCommand, ElementName=densityMenu }" CommandParameter="{Binding}"/>
+								<RadioButton IsChecked="{Binding IsSelected}" VerticalAlignment="Center" Content="{Binding Name}" Command="{Binding Path=((dc:ApperanceMenuVM)DataContext).SelectedDensityCommand, ElementName=densityMenu }" CommandParameter="{Binding}" />
 							</DataTemplate>
 						</MenuItem.ItemTemplate>
 					</MenuItem>
@@ -45,38 +45,33 @@
 			</Menu>
 			<Border BorderThickness="2" DockPanel.Dock="Bottom" BorderBrush="{DynamicResource ThemeAccentBrush}">
 				<DockPanel>
-					<Button Content="A"/>
-					<Button Content="B"/>
+					<Button Content="A" />
+					<Button Content="B" />
 				</DockPanel>
 			</Border>
 		</DockPanel>
-
 		<Grid DockPanel.Dock="Bottom"
 			  Margin="5">
 			<Grid.RowDefinitions>
-				<RowDefinition Height="auto"/>
-				<RowDefinition Height="*"/>
+				<RowDefinition Height="auto" />
+				<RowDefinition Height="*" />
+				<RowDefinition Height="auto" />
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
-				<!--<ColumnDefinition Width="*" MinWidth="100"/>
-			<ColumnDefinition Width="3*"/>-->
+				<!--<ColumnDefinition Width="*" MinWidth="100" /><ColumnDefinition Width="3*" />-->
 				<ColumnDefinition Width="4*"/>
-				<ColumnDefinition Width="2*"
-								  MinWidth="200"/>
+				<ColumnDefinition Width="2*"/>
 			</Grid.ColumnDefinitions>
-
 			<controls:Header Grid.Row="0"
 				   Grid.Column="0"
 				   Margin="5">
 				Obiekty
 			</controls:Header>
-
 			<SplitView Grid.Row="1"
 					   Grid.Column="0"
 					   IsPaneOpen="True"
 					   DisplayMode="Inline"
 					   OpenPaneLength="296">
-
 				<SplitView.Pane>
 					<ListBox ItemsSource="{Binding Targets}"
 							 SelectedItem="{Binding SelectedTarget, Mode=TwoWay}"
@@ -85,101 +80,101 @@
 						<ListBox.ItemTemplate>
 							<DataTemplate x:Class="dto:Target">
 								<Border CornerRadius="4" Padding="1">
-									<TextBlock Text="{Binding Name}"/>
+									<TextBlock Text="{Binding Name}"
+											   FontSize="18"/>
 								</Border>
 							</DataTemplate>
 						</ListBox.ItemTemplate>
 					</ListBox>
 				</SplitView.Pane>
-
 				<DataGrid ItemsSource="{Binding SelectedTarget.Measurements}"
-							  AutoGenerateColumns="False"
-							  CanUserReorderColumns="True"
-							  CanUserResizeColumns="True"
-								GridLinesVisibility="All"
-							  CanUserSortColumns="True"
-								SelectedItem="{Binding SelectedMeasurement, Mode=TwoWay}">
+						  AutoGenerateColumns="False"
+						  IsReadOnly="True"
+						  CanUserReorderColumns="True"
+						  CanUserResizeColumns="True"
+						  GridLinesVisibility="All"
+						  CanUserSortColumns="True"
+						  SelectedItem="{Binding SelectedMeasurement, Mode=TwoWay}">
 					<DataGrid.Columns>
 						<DataGridTextColumn Header="DATA"
 											Binding="{Binding Date}"
-											IsReadOnly="True"/>
+											IsReadOnly="True" />
 						<DataGridTextColumn Header="METODA"
 											Binding="{Binding Method}"
-											IsReadOnly="True"/>
+											IsReadOnly="True" />
 						<DataGridTextColumn Header="WYNIK"
 											Binding="{Binding Results}"
-											IsReadOnly="True"/>
+											IsReadOnly="True" />
 						<DataGridTextColumn Header="KOMENTARZ"
 											Binding="{Binding Comment}"
-											IsReadOnly="True"/>
+											IsReadOnly="True" />
 					</DataGrid.Columns>
 				</DataGrid>
 			</SplitView>
-
+			
 			<!--Measurement presentation-->
 			<controls:Header Grid.Row="0"
 				   Grid.Column="1"
 				   Margin="5">
 				Metryka pomiaru
 			</controls:Header>
-
+			
 			<Grid Grid.Row="1"
 				  Grid.Column="1"
-				  IsVisible="{Binding ShouldMeasurementBePresented}">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="5"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="2*"/>
-					<ColumnDefinition Width="*"/>
-					<ColumnDefinition Width="5"/>
-				</Grid.ColumnDefinitions>
+				  IsVisible="{Binding ShouldShowMeasurementMetrics}"
+				  IsEnabled="{Binding ShouldShowMeasurementMetrics}">
 
 				<Grid.RowDefinitions>
-					<RowDefinition Height="5"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
 					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"
-								   MaxHeight="60"/>
+					<RowDefinition Height="auto"/>
+					<RowDefinition Height="auto"/>
 					<RowDefinition Height="*"/>
-					<RowDefinition Height="5"/>
 				</Grid.RowDefinitions>
 				
-				<TextBlock Grid.Row="1"
-						   Grid.Column="1"
-						   Grid.ColumnSpan="2">
+				<TextBlock Grid.Row="0" 
+						   FontSize="18">
 					<Bold>Obiekt:</Bold>
-					<Run Text="{Binding SelectedTarget.Name}"/>
+					<Run Text="{Binding SelectedTarget.Name}" />
 				</TextBlock>
-				
-				<Panel Grid.Row="2"
-					   Grid.Column="1"
-					   Grid.ColumnSpan="3">
+				<UniformGrid Grid.Row="1" 
+							 Rows="1" Columns="2"
+						   HorizontalAlignment="Stretch">
+					<TextBlock Grid.Column="0" 
+							   FontSize="18">
+						<Bold>Metoda:</Bold>
+						<Run Text="{Binding SelectedMeasurement.Method}" />
+					</TextBlock>
+					<TextBlock Grid.Column="1" 
+							   FontSize="18">
+						<Bold>Data:</Bold>
+						<Run Text="{Binding SelectedMeasurement.Date}" />
+					</TextBlock>
+				</UniformGrid>
+				<WrapPanel Grid.Row="2">
 					<TextBlock>METRICS TO BE ADDED</TextBlock>
-				</Panel>
-
-				<TextBlock Grid.Row="3"
-						   Grid.Column="1"
-						   Grid.ColumnSpan="2">
+				</WrapPanel>
+				<TextBlock Grid.Row="3" 
+						   FontSize="18">
 					<Bold>Komentarz:</Bold>
 				</TextBlock>
-				
 				<TextBox Grid.Row="4"
-						 Grid.Column="1"
-						 Grid.ColumnSpan="3"
 						 IsReadOnly="True"
-						 Text="{Binding SelectedMeasurement.Comment}"/>
-
+						 Text="{Binding SelectedMeasurement.Comment}" />
+				
 				<controls:MeasurementChartView Grid.Row="5"
 											   x:Name="plot"
-											   Grid.Column="1"
-											   Grid.ColumnSpan="3"
 											   Margin="5"
-											   XData="{Binding SelectedMeasurement.MeasurementDataVM.XData}"
-											   YData="{Binding SelectedMeasurement.MeasurementDataVM.YData}"
-											   PlotStyle="{DynamicResource PlotStyle}">
-				</controls:MeasurementChartView>
+											   XData="{Binding MeasurementMetricsVM.XData}"
+											   YData="{Binding MeasurementMetricsVM.YData}"
+											   PlotStyle="{DynamicResource PlotStyle}"></controls:MeasurementChartView>
 			</Grid>
+			
+			<Label Grid.Row="2"
+				   Grid.Column="0"
+				   Grid.ColumnSpan="2"
+				   Content="{Binding MessageBusService.CurrentMessage}"/>
 		</Grid>
 	</DockPanel>
 </Window>

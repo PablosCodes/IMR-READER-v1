@@ -9,6 +9,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace IMRReader.DataContextes
         private readonly IDialogService? _dialogService;
         private readonly IMeasurementDataService _measurementDataService;
         private readonly ITargetInfoLoader? _targetInfoLoader;
+        private readonly MessageBuilder _messageBuilder;
+
+        public IMessageBusService MessageBusService { get; private set; }
 
         public ApperanceMenuVM ApperanceMenuVM { get; set; }
 
@@ -35,34 +39,53 @@ namespace IMRReader.DataContextes
             get => _selectedTarget;
             set
             {
+                if (_selectedTarget is not null)
+                    _selectedTarget.Measurements?.Clear();
                 this.RaiseAndSetIfChanged(ref _selectedTarget, value);
                 this.RaisePropertyChanged(nameof(SelectedTarget.Measurements));
                 this.RaisePropertyChanged(nameof(SelectedTarget.Name));
             }
         }
 
-        private MeasurementVM _selectedMeasurement;
-        public MeasurementVM SelectedMeasurement
+        private MeasurementVM? _selectedMeasurement;
+        public MeasurementVM? SelectedMeasurement
         {
             get { return _selectedMeasurement; }
             set
             {
+                if (_selectedMeasurement is not null && MeasurementMetricsVM is not null)
+                {
+                    Array.Clear(MeasurementMetricsVM.XData);
+                    Array.Clear(MeasurementMetricsVM.YData);
+                    //_selectedMeasurement.MeasurementDataVM = default;
+                }
+
                 this.RaiseAndSetIfChanged(ref _selectedMeasurement, value);
                 this.RaisePropertyChanged(nameof(SelectedMeasurement.Comment));
-                this.RaisePropertyChanged(nameof(SelectedMeasurement.MeasurementDataVM.XData));
-                this.RaisePropertyChanged(nameof(SelectedMeasurement.MeasurementDataVM.YData));
+                this.RaisePropertyChanged(nameof(ShouldShowMeasurementMetrics));
             }
         }
 
-        private bool _shouldMeasurementBePresented = true;
-        public bool ShouldMeasurementBePresented
+        private MeasurementMetricsVM? _measurementMetricsVM;
+        public MeasurementMetricsVM? MeasurementMetricsVM
         {
-            get => _shouldMeasurementBePresented;
+            get
+            {
+                return _measurementMetricsVM;
+            }
             set
             {
-                this.RaiseAndSetIfChanged(ref _shouldMeasurementBePresented, value);
+                this.RaiseAndSetIfChanged(ref _measurementMetricsVM, value);
+                this.RaisePropertyChanged(nameof(MeasurementMetricsVM.XData));
+                this.RaisePropertyChanged(nameof(MeasurementMetricsVM.YData));
             }
         }
+
+        public bool ShouldShowMeasurementMetrics
+        {
+            get { return SelectedMeasurement is not null; }
+        }
+
 
         public ReactiveCommand<Unit, Task> OpenFileDialogCommand { get; private set; }
 
@@ -72,11 +95,20 @@ namespace IMRReader.DataContextes
 
         public ReactiveCommand<Unit, Unit> ExitAppCommand { get; private set; }
 
-        public MainWindowVM(IDialogService dialogService, ITargetInfoLoader targetInfoLoader, IMeasurementDataService measurementDataService) : this()
+        public MainWindowVM(IDialogService dialogService, ITargetInfoLoader targetInfoLoader, IMeasurementDataService measurementDataService, IMessageBusService messageBusService) : this()
         {
             _targetInfoLoader = targetInfoLoader;
             _dialogService = dialogService;
             _measurementDataService = measurementDataService;
+            MessageBusService = messageBusService;
+
+            _messageBuilder = new MessageBuilder();
+            _targets = new ObservableCollection<TargetVM>();
+            ApperanceMenuVM = new ApperanceMenuVM();
+            MeasurementMetricsVM = new MeasurementMetricsVM();
+
+            InitCommands();
+            InitObservators();
         }
 
         /// <summary>
@@ -84,13 +116,6 @@ namespace IMRReader.DataContextes
         /// </summary>
         public MainWindowVM()
         {
-            _targets = new ObservableCollection<TargetVM>();
-            ApperanceMenuVM = new ApperanceMenuVM();
-            InitCommands();
-            InitObservators();
-#if DEBUG
-            SeedData();
-#endif
         }
 
         private void InitCommands()
@@ -121,14 +146,20 @@ namespace IMRReader.DataContextes
             var dialog = await _dialogService.ShowOpenFileDialogAsync(this, openFileDialogSettings);
 
             // TODO: Add selected path validation
-            string filePath = dialog.Path.AbsoluteUri;
-            _targetInfoLoader.OpenFile(filePath);
+            if (dialog?.Path is not null)
+            {
+                string filePath = dialog.Path.AbsoluteUri;
+                _targetInfoLoader.OpenFile(filePath);
 
-            var loadTask = LoadTargetsFromFile();
+                var loadTask = LoadTargetsFromFile();
+            }
         }
 
         private async Task LoadTargetsFromFile()
         {
+            string statusLoadingMessage = _messageBuilder.GetLoadingTargetsMsg(_targetInfoLoader?.FilePath);
+            EnqueueMessage(statusLoadingMessage);
+
             Targets.Clear();
             var targets = _targetInfoLoader.GetTargets();
 
@@ -136,6 +167,12 @@ namespace IMRReader.DataContextes
             {
                 Targets.Add(target.GetVM());
             }
+            await targets.LastAsync();
+
+            int targetsCount = Targets.Count();
+
+            string statusLoadedMessage = _messageBuilder.GetLoadedTargetsMsg(_targetInfoLoader?.FilePath, targetsCount);
+            EnqueueMessage(statusLoadedMessage, shouldStayIfLast: false, force: true);
         }
 
         private async Task HandleTargetSelection(TargetVM selectedTarget)
@@ -146,11 +183,18 @@ namespace IMRReader.DataContextes
             }
         }
 
+        // TODO: Add file support
         private async Task HandleMeasurementSelection(MeasurementVM selectedMeasurement)
         {
             if (selectedMeasurement is not null)
             {
-                selectedMeasurement.MeasurementDataVM = (await _measurementDataService.LoadMeasurementInfo(selectedMeasurement)).GetVM();
+                string statusLoadingMessage = _messageBuilder.GetLoadingMeasurementMetricsMsg("HARDKODOWANE");
+                EnqueueMessage(statusLoadingMessage);
+
+                MeasurementMetricsVM = (await _measurementDataService.LoadMeasurementInfo(selectedMeasurement)).GetVM();
+
+                string statusLoadedMessage = _messageBuilder.GetLoadedMeasurementMetricsMsg("HARDKODOWANE");
+                EnqueueMessage(statusLoadedMessage, shouldStayIfLast: false, force: true);
             }
         }
 
@@ -159,12 +203,21 @@ namespace IMRReader.DataContextes
             if (measurementsTarget is null)
                 return;
 
+            string statusLoadingMessage = _messageBuilder.GetLoadingMeasurementsMsg(_targetInfoLoader?.FilePath);
+            EnqueueMessage(statusLoadingMessage);
+
             var measurements = _targetInfoLoader.GetMeasurementsForTarget(measurementsTarget.Id);
 
             await foreach (var measurement in measurements)
             {
                 measurementsTarget.Measurements.Add(measurement.GetVM());
             }
+
+            await measurements.LastAsync();
+
+            int loadedCount = measurementsTarget.Measurements.Count;
+            string statusLoadedMessage = _messageBuilder.GetLoadedMeasurementsMsg(_targetInfoLoader?.FilePath, loadedCount);
+            EnqueueMessage(statusLoadedMessage, shouldStayIfLast: false, force: true);
         }
 
         private void ExitApp()
@@ -172,27 +225,24 @@ namespace IMRReader.DataContextes
             Environment.Exit(0);
         }
 
-        private void SeedData()
+        private void EnqueueMessage(string newMessage, int minDisplayedTime = 500, int maxDisplayedTime = 5000, bool shouldStayIfLast = true, bool force = false)
         {
-            Targets.Add(
-                new()
-                {
-                    Id = 0,
-                    Name = "Nieznany",
-                    Measurements = new() {
-                    new() { Id = 0, Date = DateTime.Now, Method = "2P", Results = "2.2 Ohm", Comment = "przekroczony" },
-                    new() { Id = 1, Date = DateTime.Now, Method = "1P", Results = "1.2 Ohm" }
-                }
-                });
-            Targets.Add(
-                new()
-                {
-                    Id = 1,
-                    Name = "skalowanie",
-                    Measurements = new(){
-                    new(){Id=0, Date=DateTime.Now, Method="3P", Results="2.2 Ohm", Comment="przekroczony" },
-                }
-                });
+            MessageVM messageToEnqueue = new()
+            {
+                Content = newMessage,
+                MinimumDisplayTime = minDisplayedTime,
+                MaximumDisplayTime = maxDisplayedTime,
+                ShouldStay = shouldStayIfLast
+            };
+
+            if (force)
+            {
+                MessageBusService.ForceEnqueue(messageToEnqueue);
+            }
+            else
+            {
+                MessageBusService.Enqueue(messageToEnqueue);
+            }
         }
     }
 }

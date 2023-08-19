@@ -30,9 +30,9 @@ namespace IMRReader.Application.Common
             return targetVM;
         }
 
-        public static MeasurementDataVM GetVM(this MeasurementData measurementData)
+        public static MeasurementMetricsVM GetVM(this MeasurementMetrics measurementData)
         {
-            MeasurementDataVM measurementDataVM = new()
+            MeasurementMetricsVM measurementDataVM = new()
             {
                 XData = measurementData.XData,
                 YData = measurementData.YData
