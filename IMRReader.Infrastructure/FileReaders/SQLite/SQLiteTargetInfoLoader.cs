@@ -4,14 +4,14 @@ using Microsoft.Data.Sqlite;
 using System.Diagnostics;
 using System.Text;
 
-namespace IMRReader.Infrastructure.FileReaders
+namespace IMRReader.Infrastructure.FileReaders.SQLite
 {
     public class SQLiteTargetInfoLoader : ITargetInfoLoader
     {
         private const string SELECT_TARGETS_COMMAND = @"SELECT obiekt_id, obiekt_nazwa FROM obiekt;";
-        private const string SELECT_MEASUREMENTS_FOR_TARGET_COMMAND = @"SELECT p_id, DATETIME(p_czas, 'unixepoch'), p_metoda, p_koment FROM pomiar where p_obiekt_id=$targetId;";
+        private const string SELECT_MEASUREMENTS_FOR_TARGET_COMMAND = @"SELECT p_id, DATETIME(p_czas, 'unixepoch'), p_metoda, p_koment, p_w_robl FROM pomiar where p_obiekt_id=$targetId;";
 
-        private bool isInitialized = false;
+        private bool _isInitialized = false;
         private SqliteConnection? _sqlLiteConnection;
         public string? FilePath { get; private set; }
 
@@ -26,12 +26,12 @@ namespace IMRReader.Infrastructure.FileReaders
             _sqlLiteConnection = new SqliteConnection(connectionString);
             _sqlLiteConnection.Open();
 
-            isInitialized = true;
+            _isInitialized = true;
         }
 
         private void CheckIfInitialized()
         {
-            if (!isInitialized)
+            if (!_isInitialized)
                 throw new Exceptions.ServiceNotInitializedException();
         }
 
@@ -46,7 +46,7 @@ namespace IMRReader.Infrastructure.FileReaders
             return LoadMeasurements(selectCommand);
         }
 
-        private static async IAsyncEnumerable<Measurement> LoadMeasurements(SqliteCommand sqliteCommand)
+        private async IAsyncEnumerable<Measurement> LoadMeasurements(SqliteCommand sqliteCommand)
         {
             using var sqlReader = sqliteCommand.ExecuteReader();
             while (await sqlReader.ReadAsync())
@@ -54,17 +54,7 @@ namespace IMRReader.Infrastructure.FileReaders
                 Measurement? latestMeasurement = default;
                 try
                 {
-                    latestMeasurement = new()
-                    {
-                        Id = sqlReader.GetInt32(0),
-                        Date = sqlReader.GetDateTime(1),
-                        Method = sqlReader.GetString(2),
-                        //Results = sqlReader.GetString(3),
-                        Results = string.Empty,
-                        Comment = sqlReader.GetString(3)
-                    };
-
-
+                    latestMeasurement = sqlReader.ParseRecordAsMeasurement();
                 }
                 catch (Exception ex)
                 {
@@ -94,12 +84,7 @@ namespace IMRReader.Infrastructure.FileReaders
                 Target? target = default;
                 try
                 {
-                    target = new()
-                    {
-                        Id = sqlReader.GetInt32(0),
-                        Name = sqlReader.GetString(1)
-                    };
-
+                    target = sqlReader.ParseRecordAsTarget();                       
                 }
                 catch (Exception ex)
                 {
